@@ -1,8 +1,10 @@
-﻿using System;
+﻿using RedisManager.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RedisManager.ViewModel
 {
@@ -12,7 +14,7 @@ namespace RedisManager.ViewModel
         public StringKeyViewModel(string key, DbNodeViewModel parent)
             : base(key, parent)
         {
-            this._value = this.RedisClient.GetDataBase(this.DBIndex).Get(this.KeyName);
+           // this._value = this.RedisClient.GetDataBase(this.DBIndex).Get(this.KeyName);
         }
 
         public override KeyType KeyType
@@ -46,9 +48,9 @@ namespace RedisManager.ViewModel
             {
                 return this._updateCommand ?? (this._updateCommand = new RelayCommand(() =>
                 {
-                    var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    db.Del(this.KeyName);
-                    db.Set(this.KeyName, this.KeyValue);
+                  //  var db = this.RedisClient.GetDataBase(this.DBIndex);
+                  //  db.Del(this.KeyName);
+                 //   db.Set(this.KeyName, this.KeyValue);
 
                 }));
             }

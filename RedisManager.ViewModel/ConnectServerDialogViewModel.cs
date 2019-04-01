@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using System.Windows.Input;
+using RedisManager.Util;
 
 namespace RedisManager.ViewModel
 {
@@ -82,7 +83,7 @@ namespace RedisManager.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        ex.Log("TestConnectCommand");
+                        //ex.Log("TestConnectCommand");
                         System.Windows.MessageBox.Show(ex.Message, "测试连接失败");
                     }
                     finally
@@ -100,8 +101,8 @@ namespace RedisManager.ViewModel
         {
             await Task.Run(() =>
             {
-                SAEA.RedisSocket.RedisClient redisClient = new SAEA.RedisSocket.RedisClient(cnnStr);
-                redisClient.Connect();
+               // SAEA.RedisSocket.RedisClient redisClient = new SAEA.RedisSocket.RedisClient(cnnStr);
+              //  redisClient.Connect();
 
             });
         }

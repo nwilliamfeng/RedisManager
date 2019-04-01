@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using RedisManager.Util;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace RedisManager.ViewModel
 {
@@ -17,9 +22,9 @@ namespace RedisManager.ViewModel
         private IEventAggregator _eventAggregator;
         public RedisClientViewModel(string connectionName, string connectionString, IEventAggregator eventAggregator)
         {
-            this._client = new SAEA.RedisSocket.RedisClient(connectionString);
-            this.Items = new ObservableCollection<RedisClient.DbNodeViewModel>();
-            this._eventAggregator = eventAggregator;
+            //this._client = new SAEA.RedisSocket.RedisClient(connectionString);
+            //this.Items = new ObservableCollection<RedisClient.DbNodeViewModel>();
+            //this._eventAggregator = eventAggregator;
             this.Config = new RedisClientConfigInfo { ConnectionString = connectionString, ConnectionName = connectionName };
             this.Name = Config.ConnectionName;
         }
@@ -49,16 +54,16 @@ namespace RedisManager.ViewModel
             {
                 int idx = 0;
                 List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
-                while (idx < MaxDBConnectCount)
-                {
-                    var success = this._client.Select(idx);
-                    if (success)
-                        lst.Add(new Tuple<int, int>(idx, this._client.DBSize()));
-                    if (this._client.IsCluster)
-                        break;
-                    else
-                        idx++;
-                }
+                //while (idx < MaxDBConnectCount)
+                //{
+                //    var success = this._client.Select(idx);
+                //    if (success)
+                //        lst.Add(new Tuple<int, int>(idx, this._client.DBSize()));
+                //    if (this._client.IsCluster)
+                //        break;
+                //    else
+                //        idx++;
+                //}
 
                 return lst;
             });
@@ -71,12 +76,12 @@ namespace RedisManager.ViewModel
 
         public ObservableCollection<DbNodeViewModel> Items { get; private set; }
 
-        private SAEA.RedisSocket.RedisClient _client;
+       // private SAEA.RedisSocket.RedisClient _client;
 
-        public SAEA.RedisSocket.RedisClient Raw
-        {
-            get { return this._client; }
-        }
+        //public SAEA.RedisSocket.RedisClient Raw
+        //{
+        //    get { return this._client; }
+        //}
 
         private ICommand _openCommand;
 
@@ -86,7 +91,7 @@ namespace RedisManager.ViewModel
             {
                 return this._openCommand ?? (this._openCommand = new RelayCommand(() =>
                 {
-                    this._eventAggregator.PublishOnUIThread(new RedisClientDetailEventArgs(this.Raw));
+                  //  this._eventAggregator.PublishOnUIThread(new RedisClientDetailEventArgs(this.Raw));
                 }));
             }
         }
@@ -119,8 +124,8 @@ namespace RedisManager.ViewModel
                     var lst = await this.GetDbs();
                     lst.ForEach(x =>
                     {
-                        var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
-                        this.Items.Add(dbNode);
+                       // var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
+                     //   this.Items.Add(dbNode);
                     });
 
                 }));
@@ -142,8 +147,8 @@ namespace RedisManager.ViewModel
                     var lst = await this.GetDbs();
                     lst.ForEach(x =>
                     {
-                        var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
-                        this.Items.Add(dbNode);
+                    //    var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
+                     //   this.Items.Add(dbNode);
                     });
                     this.IsExpanded = true;
 
@@ -157,7 +162,7 @@ namespace RedisManager.ViewModel
         {
             await Task.Run(() =>
             {
-                this._client.Connect();
+              //  this._client.Connect();
             });
         }
     }

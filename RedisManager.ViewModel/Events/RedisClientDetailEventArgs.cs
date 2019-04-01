@@ -8,11 +8,11 @@ namespace RedisManager.ViewModel
 {
     public class RedisClientDetailEventArgs : EventArgs
     {
-        public RedisClientDetailEventArgs(SAEA.RedisSocket.RedisClient client)
-        {
-            this.Client = client;
-        }
+        //public RedisClientDetailEventArgs(SAEA.RedisSocket.RedisClient client)
+        //{
+        //    this.Client = client;
+        //}
 
-        public SAEA.RedisSocket.RedisClient Client { get; private set; }
+       // public SAEA.RedisSocket.RedisClient Client { get; private set; }
     }
 }

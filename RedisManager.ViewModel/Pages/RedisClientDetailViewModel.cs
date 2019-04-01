@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,13 +38,13 @@ namespace RedisManager.ViewModel
 
         void IHandle<RedisClientDetailEventArgs>.Handle(RedisClientDetailEventArgs arg)
         {
-            if (!arg.Client.IsConnected)
-            {
-                System.Windows.MessageBox.Show(System.Windows.Application.Current.MainWindow, "指定的Redis库未连接。");
-                return;
-            }
-            this.ClientInfo = arg.Client.Info();
-            this.Title = arg.Client.RedisConfig?.IP;
+            //if (!arg.Client.IsConnected)
+            //{
+            //    System.Windows.MessageBox.Show(System.Windows.Application.Current.MainWindow, "指定的Redis库未连接。");
+            //    return;
+            //}
+            //this.ClientInfo = arg.Client.Info();
+            //this.Title = arg.Client.RedisConfig?.IP;
             this.IsVisible = true;
         }
     }

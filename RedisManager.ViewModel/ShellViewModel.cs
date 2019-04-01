@@ -11,6 +11,7 @@ using System.Windows;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using Newtonsoft.Json;
+using RedisManager.Util;
 
 namespace RedisManager.ViewModel
 {
@@ -24,11 +25,11 @@ namespace RedisManager.ViewModel
         [ImportingConstructor]
         public ShellViewModel(PageModuleViewModel pageModule, IEventAggregator eventAggregator, IWindowManager windowManager)
         {
-            this.DisplayName = string.Format("Redis客户端工具 (Version:{0})", AssemblyHelper.Current.GetName().Version.ToString());
+            this.DisplayName =  "Redis客户端工具 " ;
             this.RedisClients = new ObservableCollection<RedisClientViewModel>();
             var infos = JsonConvert.DeserializeObject<RedisClientViewModel.RedisClientConfigInfo[]>(File.ReadAllText(CONFIG_FILE));
-            foreach (var info in infos)
-                this.RedisClients.Add(new RedisClient.RedisClientViewModel(info, eventAggregator));
+          //  foreach (var info in infos)
+          //      this.RedisClients.Add(new RedisClient.RedisClientViewModel(info, eventAggregator));
             this.PageModule = pageModule;
             this._eventAggregator = eventAggregator;
             this._windowManager = windowManager;

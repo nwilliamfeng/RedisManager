@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManager.Util", "RedisM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManager.ViewModel", "RedisManager.ViewModel\RedisManager.ViewModel.csproj", "{B670FE8C-927F-48FA-AB66-DD060718064D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManager.Core", "RedisManager.Core\RedisManager.Core.csproj", "{87FCA0FA-47F0-48B0-8B8A-486B708A7172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManager.Driver.StackExchange", "RedisManager.Driver.StackExchange\RedisManager.Driver.StackExchange.csproj", "{27D00372-9CCB-4BBE-9C62-919A4906DCB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{B670FE8C-927F-48FA-AB66-DD060718064D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B670FE8C-927F-48FA-AB66-DD060718064D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B670FE8C-927F-48FA-AB66-DD060718064D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FCA0FA-47F0-48B0-8B8A-486B708A7172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FCA0FA-47F0-48B0-8B8A-486B708A7172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FCA0FA-47F0-48B0-8B8A-486B708A7172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FCA0FA-47F0-48B0-8B8A-486B708A7172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D00372-9CCB-4BBE-9C62-919A4906DCB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D00372-9CCB-4BBE-9C62-919A4906DCB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D00372-9CCB-4BBE-9C62-919A4906DCB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D00372-9CCB-4BBE-9C62-919A4906DCB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

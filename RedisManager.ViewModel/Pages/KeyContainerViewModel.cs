@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +42,7 @@ namespace RedisManager.ViewModel
             if (arg.Type == KeyNodeEventType.Select)
             {
                 this.Content = arg.Data;
-                this.Title = string.Format("{0}::db{1}::{2}", arg.Data.Parent.RedisClient.RedisConfig.IP, arg.Data.Parent.Index, arg.Data.KeyName);
+              //  this.Title = string.Format("{0}::db{1}::{2}", arg.Data.Parent.RedisClient.RedisConfig.IP, arg.Data.Parent.Index, arg.Data.KeyName);
                 this.IsVisible = true;
             }
             else if (arg.Type == KeyNodeEventType.Delete)

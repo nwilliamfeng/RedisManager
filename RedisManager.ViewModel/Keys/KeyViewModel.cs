@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using RedisManager.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace RedisManager.ViewModel
 {
@@ -19,10 +23,10 @@ namespace RedisManager.ViewModel
         public DbNodeViewModel Parent { get; private set; }
 
 
-        protected SAEA.RedisSocket.RedisClient RedisClient
-        {
-            get { return this.Parent.RedisClient; }
-        }
+        //protected SAEA.RedisSocket.RedisClient RedisClient
+        //{
+        //    get { return this.Parent.RedisClient; }
+        //}
 
         public abstract KeyType KeyType { get; }
 
@@ -150,7 +154,7 @@ namespace RedisManager.ViewModel
                     var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该实例吗？", "删除", MessageBoxButton.OKCancel);
                     if (dr == MessageBoxResult.Cancel)
                         return;
-                    this.RedisClient.GetDataBase(this.DBIndex).Del(this.KeyName);
+                    //this.RedisClient.GetDataBase(this.DBIndex).Del(this.KeyName);
                     this.Parent.Keys.Remove(this);
                     this.EventAggregator.PublishOnUIThread(new KeyNodeEventArgs(this, KeyNodeEventType.Delete));
                 }));
@@ -170,11 +174,11 @@ namespace RedisManager.ViewModel
                     var dr = wm.ShowDialog(dvm);
                     if (dr == false)
                         return;
-                    if (this.RedisClient.GetDataBase(this.DBIndex).Rename(this.KeyName, dvm.Content))
-                    {
-                        MessageBox.Show("修改成功");
-                        this.KeyName = dvm.Content;
-                    }
+                    //if (this.RedisClient.GetDataBase(this.DBIndex).Rename(this.KeyName, dvm.Content))
+                    //{
+                    //    MessageBox.Show("修改成功");
+                    //    this.KeyName = dvm.Content;
+                    //}
                 }));
             }
         }

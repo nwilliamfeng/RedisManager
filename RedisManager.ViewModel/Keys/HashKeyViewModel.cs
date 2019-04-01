@@ -1,10 +1,13 @@
-﻿using System;
+﻿using RedisManager.Util;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace RedisManager.ViewModel.Keys
+namespace RedisManager.ViewModel
 {
     public class HashKeyViewModel : KeyViewModel
     {
@@ -61,14 +64,14 @@ namespace RedisManager.ViewModel.Keys
         {
             if (_values == null)
             {
-                this._values = new ObservableCollection<RedisClient.HashKeyItemViewModel>();
-                var hkeys = this.RedisClient.GetDataBase(this.DBIndex).GetHKeys(this.KeyName);
-                foreach (var hkey in hkeys)
-                {
-                    var val = this.RedisClient.GetDataBase(this.DBIndex).HGet(this.KeyName, hkey);
+                //this._values = new ObservableCollection<RedisClient.HashKeyItemViewModel>();
+                //var hkeys = this.RedisClient.GetDataBase(this.DBIndex).GetHKeys(this.KeyName);
+                //foreach (var hkey in hkeys)
+                //{
+                //    var val = this.RedisClient.GetDataBase(this.DBIndex).HGet(this.KeyName, hkey);
 
-                    this._values.Add(new HashKeyItemViewModel(hkey, val));
-                }
+                //    this._values.Add(new HashKeyItemViewModel(hkey, val));
+                //}
             }
             return this._values;
         }
@@ -81,11 +84,11 @@ namespace RedisManager.ViewModel.Keys
             {
                 return this._updateCommand ?? (this._updateCommand = new RelayCommand(() =>
                 {
-                    var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    db.HSet(this.KeyName, this.EditingKeyValueItem.Key, this.EditingKeyValueItem.Value);
-                    db.HDel(this.KeyName, this.SelectedKeyValueItem.Key);
-                    this.SelectedKeyValueItem.Key = this.EditingKeyValueItem.Key;
-                    this.SelectedKeyValueItem.Value = this.EditingKeyValueItem.Value;
+                    //var db = this.RedisClient.GetDataBase(this.DBIndex);
+                    //db.HSet(this.KeyName, this.EditingKeyValueItem.Key, this.EditingKeyValueItem.Value);
+                    //db.HDel(this.KeyName, this.SelectedKeyValueItem.Key);
+                    //this.SelectedKeyValueItem.Key = this.EditingKeyValueItem.Key;
+                    //this.SelectedKeyValueItem.Value = this.EditingKeyValueItem.Value;
                 }, () => this.EditingKeyValueItem != null));
             }
         }
@@ -102,8 +105,8 @@ namespace RedisManager.ViewModel.Keys
                     var dr = this.WindowManager.ShowDialog(vm);
                     if (dr == false)
                         return;
-                    var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    db.HSet(this.KeyName, vm.Key, vm.Value);
+                  //  var db = this.RedisClient.GetDataBase(this.DBIndex);
+                  //  db.HSet(this.KeyName, vm.Key, vm.Value);
                     this.KeyValue.Add(new HashKeyItemViewModel { Key = vm.Key, Value = vm.Value });
 
                 }));
@@ -118,13 +121,13 @@ namespace RedisManager.ViewModel.Keys
             {
                 return this._deleteRowCommand ?? (this._deleteRowCommand = new RelayCommand(() =>
                 {
-                    var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该行吗？", "删除", MessageBoxButton.OKCancel);
-                    if (dr == MessageBoxResult.Cancel)
-                        return;
-                    var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    db.HDel(this.KeyName, this.SelectedKeyValueItem.Key);
-                    this.KeyValue.Remove(this.SelectedKeyValueItem);
-                    this.SelectedKeyValueItem = null;
+                    //var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该行吗？", "删除", MessageBoxButton.OKCancel);
+                    //if (dr == MessageBoxResult.Cancel)
+                    //    return;
+                    //var db = this.RedisClient.GetDataBase(this.DBIndex);
+                    //db.HDel(this.KeyName, this.SelectedKeyValueItem.Key);
+                    //this.KeyValue.Remove(this.SelectedKeyValueItem);
+                    //this.SelectedKeyValueItem = null;
                 }, () => this.SelectedKeyValueItem != null));
             }
         }
