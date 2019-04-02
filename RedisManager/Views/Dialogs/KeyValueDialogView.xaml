@@ -54,7 +54,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Score" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.EnumToVisibilityConverter},ConverterParameter=ZSet}" Margin="0,10,0,5"/>
+                <TextBlock Text="Score" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.EnumToVisibilityConverter},ConverterParameter=SortedSet}" Margin="0,10,0,5"/>
                 <TextBox  Text="{Binding SubKey}"   Grid.Row="1" Margin="0,0,0,10" Padding="5,3" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.SetToVisibilityConverter}}"/>
                 <TextBox  Text="{Binding Value}" VerticalAlignment="Stretch"  VerticalContentAlignment="Top" Grid.Row="2"/>
             </Grid>

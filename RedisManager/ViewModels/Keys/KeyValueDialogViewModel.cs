@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using StackExchange.Redis;
 
 namespace RedisManager.ViewModels
 {
@@ -62,11 +63,11 @@ namespace RedisManager.ViewModels
             }
         }
 
-        private KeyType _keyType;
+        private RedisType _keyType;
 
         public bool IsKeyTypeVisible { get; set; }
 
-        public KeyType KeyType
+        public RedisType KeyType
         {
             get { return this._keyType; }
             set
@@ -76,15 +77,15 @@ namespace RedisManager.ViewModels
             }
         }
 
-        public IEnumerable<KeyType> KeyTypes
+        public IEnumerable<RedisType> KeyTypes
         {
             get
             {
-                yield return KeyType.String;
-                yield return KeyType.Hash;
-                yield return KeyType.List;
-                yield return KeyType.Set;
-                yield return KeyType.ZSet;
+                yield return RedisType.String;
+                yield return RedisType.Hash;
+                yield return RedisType.List;
+                yield return RedisType.Set;
+                yield return RedisType.SortedSet;
             }
         }
 

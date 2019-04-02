@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using RedisManager.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace RedisManager.ViewModels
         //    get { return this.Parent.RedisClient; }
         //}
 
-        public abstract KeyType KeyType { get; }
+        public abstract RedisType KeyType { get; }
 
 
 
@@ -115,15 +116,15 @@ namespace RedisManager.ViewModels
             return null;
         }
 
-        public static KeyViewModel Create(KeyType keyType, string keyName, DbNodeViewModel parent)
+        public static KeyViewModel Create(RedisType keyType, string keyName, DbNodeViewModel parent)
         {
 
             switch (keyType)
             {
 
-                case KeyType.Hash:
+                case RedisType.Hash:
                     return new HashKeyViewModel(keyName, parent);
-                case KeyType.String:
+                case RedisType.String:
                     return new StringKeyViewModel(keyName, parent);
 
             }

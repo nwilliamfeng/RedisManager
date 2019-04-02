@@ -1,4 +1,5 @@
 ﻿using RedisManager.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,11 @@ namespace RedisManager.ViewModels
            // this._value = this.RedisClient.GetDataBase(this.DBIndex).Get(this.KeyName);
         }
 
-        public override KeyType KeyType
+        public override RedisType KeyType
         {
             get
             {
-                return KeyType.String;
+                return RedisType.String;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using RedisManager.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,11 +21,11 @@ namespace RedisManager.ViewModels
 
         }
 
-        public override KeyType KeyType
+        public override RedisType KeyType
         {
             get
             {
-                return KeyType.List;
+                return RedisType.List;
             }
         }
 

@@ -13,18 +13,20 @@ namespace RedisManager.ViewModels
 {
     public class DbNodeViewModel : NodeViewModel
     {
-        private IDatabase Database { get; set; }
+        private ConnectionMultiplexer Connection { get; set; }
         private int _dbIdx;
-        private int _dbSize;
+      
         private int _offSet = 0;
         private const int PAGE_SIZE = 20;
 
-        public DbNodeViewModel(int dbIdx, int dbSize,IDatabase database)
+        public DbNodeViewModel(int dbIdx, ConnectionMultiplexer connection)
         {
-            this.Database = database;
+            this.Connection = connection;
             this._dbIdx = dbIdx;
+
             this.Keys = new ObservableCollection<KeyViewModel>();
-            this._dbSize = dbSize;
+            this.LoadKeysAsync(true);
+
         }
 
         private IWindowManager _windowManager;
@@ -44,30 +46,27 @@ namespace RedisManager.ViewModels
         {
             if (needClear)
                 this.Keys.Clear();
+            var keys=this.Connection.SelfServer().Keys(this._dbIdx, pageSize: 50, pageOffset: this._offSet);
+            this._offSet+=keys.Count();
+           
+            if (keys.Count()==0)
+                return;
+            var lst = await Task.Run(() =>
+            {
+                List<KeyViewModel> result = new List<KeyViewModel>();
+                foreach (var key in keys)
+                {
+                    var keyType = this.Connection.GetDatabase(this._dbIdx).KeyType(key);
+                   
+                    var vm = KeyViewModel.Create(keyType, key, this);
+                    if (vm != null)
+                        result.Add(vm);
+                }
+                return result;
+            });
 
-         //   this._client.Select(this.Index); //选中本节点索引
-          //  var sp = this._client.GetDataBase().Scan(this._offSet, "*", PAGE_SIZE);
-          //  this._offSet = sp.Offset;
-          //  var keys = sp.Data;
-          //  if (keys == null)
-           //     return;
-            //var lst = await Task.Run(() =>
-            //{
-            //    List<KeyViewModel> result = new List<KeyViewModel>();
-            //    //foreach (var key in keys)
-            //    //{
-            //    //    var keyType = this._client.Type(key);
-
-            //    //    var vm = KeyViewModel.Create(keyType, key, this);
-            //    //    if (vm != null)
-            //    //        result.Add(vm);
-            //    //}
-            //    return result;
-            //});
-
-            //lst.ForEach(x => this.Keys.Add(x));
-            //this.DBSize = this._client.GetDataBase(this._dbIdx).Keys().Count;
-            //this.NotifyOfPropertyChange(() => this.Name);
+            lst.ForEach(x => this.Keys.Add(x));
+            this.NotifyOfPropertyChange(() => this.Name);
         }
 
 
@@ -79,15 +78,7 @@ namespace RedisManager.ViewModels
             get { return this._dbIdx; }
         }
 
-        public int DBSize
-        {
-            get { return this._dbSize; }
-            private set
-            {
-                this._dbSize = value;
-                this.NotifyOfPropertyChange(() => this.DBSize);
-            }
-        }
+       
 
       
 
@@ -95,7 +86,7 @@ namespace RedisManager.ViewModels
         {
             get
             {
-                return string.Format("db{0}({1})", Index, this.DBSize);
+                return string.Format("db{0}", Index);
             }
         }
 
@@ -145,23 +136,23 @@ namespace RedisManager.ViewModels
                     var dr = this.WindowManager.ShowDialog(vm);
                     if (dr == false)
                         return;
-                    
+                    var db = this.Connection.GetDatabase(this._dbIdx);
                     switch (vm.KeyType)
                     {
-                        case KeyType.String:
-                            this.Database.StringSet(vm.Key, vm.Value);
+                        case RedisType.String:
+                            db.StringSet(vm.Key, vm.Value);
                             break;
-                        case KeyType.Hash:
-                            db.HSet(vm.Key, vm.SubKey, vm.Value);
+                        case RedisType.Hash:
+                            db.HashSet(vm.Key, vm.SubKey, vm.Value);
                             break;
-                        case KeyType.Set:
-                            db.SAdd(vm.Key, vm.Value);
+                        case RedisType.Set:
+                            db.SetAdd(vm.Key, vm.Value);
                             break;
-                        case KeyType.ZSet:
-                            db.ZAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
+                        case RedisType.SortedSet:
+                            db.SortedSetAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
                             break;
-                        case KeyType.List:
-                            db.LPush(vm.Key, vm.Value);
+                        case RedisType.List:
+                            db.ListLeftPush(vm.Key, vm.Value);
                             break;
                     }
                     this.DoRefresh();

@@ -1,4 +1,5 @@
 ﻿using RedisManager.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,10 @@ namespace RedisManager
 
                 return new DelegateValueConverter((value, targetType, parameter, cultInfo) =>
                 {
-                    if (!(value is KeyType))
+                    if (!(value is RedisType))
                         return value;
-                    var t = (KeyType)value;
-                    return t == KeyType.ZSet || t == KeyType.Hash ? Visibility.Visible : Visibility.Collapsed;
+                    var t = (RedisType)value;
+                    return t == RedisType.SortedSet || t == RedisType.Hash ? Visibility.Visible : Visibility.Collapsed;
                 });
             }
         }
@@ -50,10 +51,10 @@ namespace RedisManager
 
                 return new DelegateValueConverter((value, targetType, parameter, cultInfo) =>
                 {
-                    if (!(value is KeyType))
+                    if (!(value is RedisType))
                         return value;
-                    var t = (KeyType)value;
-                    return t == KeyType.List || t == KeyType.Set ? Visibility.Collapsed : Visibility.Visible;
+                    var t = (RedisType)value;
+                    return t == RedisType.List || t == RedisType.Set ? Visibility.Collapsed : Visibility.Visible;
                 });
             }
         }

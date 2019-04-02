@@ -52,24 +52,7 @@ namespace RedisManager.ViewModels
         public RedisClientConfigInfo Config { get; private set; }
 
 
-        private async Task<List<Tuple<int, int>>> GetDbs()
-        {
-            return await Task.Run(() =>
-            {
-                int idx = 0;
-                List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
-                while (idx < MaxDBConnectCount)
-                {
-                    this.Connection.GetDatabase(idx) ;
-                       lst.Add(new Tuple<int, int>(idx, this._client.DBSize()));
-                 
-                        idx++;
-                }
-
-                return lst;
-            });
-
-        }
+       
 
 
         public string Name { get; private set; }
@@ -116,13 +99,7 @@ namespace RedisManager.ViewModels
                     }
                     this.IsExpanded = true;
                     this.IsConnected = true;
-                    this.Items.Clear();
-                    var lst = await this.GetDbs();
-                    lst.ForEach(x =>
-                    {
-                        var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this.is);
-                        this.Items.Add(dbNode);
-                    });
+                    this.AddDbs();
 
                 }));
             }
@@ -134,21 +111,24 @@ namespace RedisManager.ViewModels
         {
             get
             {
-                return this._refreshCommand ?? (this._refreshCommand = new RelayCommand(async () =>
+                return this._refreshCommand ?? (this._refreshCommand = new RelayCommand( () =>
                 {
                     this.IsConnected = false;
                     this.IsExpanded = false;
                     this.IsConnected = true;
-                    this.Items.Clear();
-                    var lst = await this.GetDbs();
-                    lst.ForEach(x =>
-                    {
-                    //    var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
-                     //   this.Items.Add(dbNode);
-                    });
+                    this.AddDbs();
                     this.IsExpanded = true;
 
                 }, () => this.IsConnected));
+            }
+        }
+
+        private void AddDbs()
+        {
+            this.Items.Clear();
+            for (var i = 0; i < MaxDBConnectCount; i++)
+            {
+                this.Items.Add(new DbNodeViewModel(i, this.Connection));
             }
         }
 
