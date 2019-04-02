@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RedisManager"
              xmlns:view="clr-namespace:RedisManager.Views"
-             xmlns:vm="clr-namespace:RedisManager.ViewModels;assembly=RedisManager.ViewModel"
+             xmlns:vm="clr-namespace:RedisManager.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>

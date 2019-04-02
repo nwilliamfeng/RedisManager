@@ -32,6 +32,7 @@ namespace RedisManager.ViewModels
             this._eventAggregator = eventAggregator;
             this._windowManager = windowManager;
 
+           
         }
 
         public PageModuleViewModel PageModule { get; private set; }

@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-   
-        xmlns:core="clr-namespace:RedisManager;assembly=RedisManager.Core"
+        
         mc:Ignorable="d"
         WindowStyle="ToolWindow"        
         WindowStartupLocation="CenterOwner"
@@ -14,7 +13,7 @@
     <Window.Resources>
         <ObjectDataProvider x:Key="keyTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}" >
             <ObjectDataProvider.MethodParameters>
-                <x:Type  TypeName="core:KeyType"/>
+                <x:Type  TypeName="local:KeyType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CD735A08-BAC3-4BF0-A909-86D62822259C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>RedisManager</RootNamespace>
     <AssemblyName>RedisManager</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
@@ -42,6 +45,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net46\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -62,6 +68,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="KeyType.cs" />
+    <Compile Include="Util\DelegateValueConverter.cs" />
+    <Compile Include="Util\RelayCommand.cs" />
+    <Compile Include="Util\RelayCommand.Generic.cs" />
+    <Compile Include="ViewModels\ConnectServerDialogViewModel.cs" />
+    <Compile Include="ViewModels\Events\KeyNodeEventArgs.cs" />
+    <Compile Include="ViewModels\Events\RedisClientDetailEventArgs.cs" />
+    <Compile Include="ViewModels\InputBoxViewModel.cs" />
+    <Compile Include="ViewModels\Keys\HashKeyItemViewModel.cs" />
+    <Compile Include="ViewModels\Keys\HashKeyViewModel.cs" />
+    <Compile Include="ViewModels\Keys\KeyValueDialogViewModel.cs" />
+    <Compile Include="ViewModels\Keys\KeyViewModel.cs" />
+    <Compile Include="ViewModels\Keys\ListKeyViewModel.cs" />
+    <Compile Include="ViewModels\Keys\SetKeyViewModel.cs" />
+    <Compile Include="ViewModels\Keys\StringKeyViewModel.cs" />
+    <Compile Include="ViewModels\Keys\ZSetKeyItemViewModel.cs" />
+    <Compile Include="ViewModels\Keys\ZSetKeyViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\DbNodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\NodeViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\RedisClientViewModel.cs" />
+    <Compile Include="ViewModels\Pages\KeyContainerViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PageModuleViewModel.cs" />
+    <Compile Include="ViewModels\Pages\PageViewModel.cs" />
+    <Compile Include="ViewModels\Pages\RedisClientDetailViewModel.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Dialogs\ConnectServerDialogView.xaml.cs">
       <DependentUpon>ConnectServerDialogView.xaml</DependentUpon>
     </Compile>
@@ -187,20 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RedisManager.Core\RedisManager.Core.csproj">
-      <Project>{87fca0fa-47f0-48b0-8b8a-486b708a7172}</Project>
-      <Name>RedisManager.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RedisManager.Util\RedisManager.Util.csproj">
-      <Project>{5abfe313-3cbb-4293-b306-5f172a0a9d3a}</Project>
-      <Name>RedisManager.Util</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RedisManager.ViewModel\RedisManager.ViewModel.csproj">
-      <Project>{B670FE8C-927F-48FA-AB66-DD060718064D}</Project>
-      <Name>RedisManager.ViewModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
