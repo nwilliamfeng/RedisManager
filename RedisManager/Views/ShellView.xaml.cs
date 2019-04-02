@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// HashKeyView.xaml 的交互逻辑
+    /// ShellView.xaml 的交互逻辑
     /// </summary>
-    public partial class HashKeyView : UserControl
+    public partial class ShellView : Window
     {
-        public HashKeyView()
+        public ShellView()
         {
             InitializeComponent();
         }

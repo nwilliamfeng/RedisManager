@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     public class RedisClientViewModel : NodeViewModel
     {

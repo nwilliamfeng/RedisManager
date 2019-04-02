@@ -10,10 +10,10 @@ using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
 using System.Threading;
 using Caliburn.Micro;
+using RedisManager.ViewModels;
 
 
-
-namespace RedisManager.Util
+namespace RedisManager
 {
 
     public class MefBootstrapper

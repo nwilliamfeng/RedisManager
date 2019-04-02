@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     [Export(typeof(PageModuleViewModel))]
     public class PageModuleViewModel : PropertyChangedBase

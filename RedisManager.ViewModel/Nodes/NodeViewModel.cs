@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     public abstract class NodeViewModel : PropertyChangedBase
     {

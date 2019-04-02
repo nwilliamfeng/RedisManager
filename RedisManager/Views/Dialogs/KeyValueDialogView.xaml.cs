@@ -12,16 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// ShellView.xaml 的交互逻辑
+    /// KeyValueDialogView.xaml 的交互逻辑
     /// </summary>
-    public partial class ShellView : Window
+    public partial class KeyValueDialogView : Window
     {
-        public ShellView()
+        public KeyValueDialogView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

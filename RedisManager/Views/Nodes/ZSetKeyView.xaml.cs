@@ -13,16 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager
+namespace RedisManager.Views
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// ZSetKeyView.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ZSetKeyView : UserControl
     {
-        public MainWindow()
+        public ZSetKeyView()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex() + 1;
         }
     }
 }

@@ -7,7 +7,7 @@ using Caliburn.Micro;
 using System.Windows.Input;
 using RedisManager.Util;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     public class ConnectServerDialogViewModel : Screen
     {

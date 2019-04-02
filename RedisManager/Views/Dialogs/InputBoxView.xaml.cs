@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// ZSetKeyView.xaml 的交互逻辑
+    /// InputBoxView.xaml 的交互逻辑
     /// </summary>
-    public partial class ZSetKeyView : UserControl
+    public partial class InputBoxView : Window
     {
-        public ZSetKeyView()
+        public InputBoxView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

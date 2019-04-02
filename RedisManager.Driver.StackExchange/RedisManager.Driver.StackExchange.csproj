@@ -45,5 +45,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedisManager.Core\RedisManager.Core.csproj">
+      <Project>{87fca0fa-47f0-48b0-8b8a-486b708a7172}</Project>
+      <Name>RedisManager.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

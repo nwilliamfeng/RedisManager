@@ -13,7 +13,7 @@ using System.IO;
 using Newtonsoft.Json;
 using RedisManager.Util;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     [Export(typeof(ShellViewModel))]
     public class ShellViewModel : Screen
@@ -27,9 +27,7 @@ namespace RedisManager.ViewModel
         {
             this.DisplayName =  "Redis客户端工具 " ;
             this.RedisClients = new ObservableCollection<RedisClientViewModel>();
-            var infos = JsonConvert.DeserializeObject<RedisClientViewModel.RedisClientConfigInfo[]>(File.ReadAllText(CONFIG_FILE));
-          //  foreach (var info in infos)
-          //      this.RedisClients.Add(new RedisClient.RedisClientViewModel(info, eventAggregator));
+           
             this.PageModule = pageModule;
             this._eventAggregator = eventAggregator;
             this._windowManager = windowManager;

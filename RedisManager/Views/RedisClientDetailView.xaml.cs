@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// KeyContainerView.xaml 的交互逻辑
+    /// RedisClientDetailView.xaml 的交互逻辑
     /// </summary>
-    public partial class KeyContainerView : UserControl
+    public partial class RedisClientDetailView : UserControl
     {
-        public KeyContainerView()
+        public RedisClientDetailView()
         {
             InitializeComponent();
         }

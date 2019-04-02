@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     public class KeyValueDialogViewModel : Screen
     {

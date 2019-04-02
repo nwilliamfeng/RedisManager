@@ -13,16 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// SetKeyView.xaml 的交互逻辑
+    /// ListKeyView.xaml 的交互逻辑
     /// </summary>
-    public partial class SetKeyView : UserControl
+    public partial class ListKeyView : UserControl
     {
-        public SetKeyView()
+        public ListKeyView()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex() + 1;
         }
     }
 }

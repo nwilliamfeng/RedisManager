@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     public class HashKeyViewModel : KeyViewModel
     {

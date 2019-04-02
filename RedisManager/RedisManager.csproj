@@ -34,22 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.Micro.Platform, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro.Platform.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,80 +62,101 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\Dialogs\ConnectServerDialogView.xaml.cs">
+      <DependentUpon>ConnectServerDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MefBootstrapper.cs" />
     <Compile Include="ValueConverters.cs" />
-    <Compile Include="View\KeyContainerView.xaml.cs">
+    <Compile Include="Views\Dialogs\InputBoxView.xaml.cs">
+      <DependentUpon>InputBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\KeyValueDialogView.xaml.cs">
+      <DependentUpon>KeyValueDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KeyContainerView.xaml.cs">
       <DependentUpon>KeyContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Nodes\HashKeyView.xaml.cs">
+    <Compile Include="Views\Nodes\HashKeyView.xaml.cs">
       <DependentUpon>HashKeyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Nodes\ListKeyView.xaml.cs">
+    <Compile Include="Views\Nodes\ListKeyView.xaml.cs">
       <DependentUpon>ListKeyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Nodes\SetKeyView.xaml.cs">
+    <Compile Include="Views\Nodes\SetKeyView.xaml.cs">
       <DependentUpon>SetKeyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Nodes\StringKeyView.xaml.cs">
+    <Compile Include="Views\Nodes\StringKeyView.xaml.cs">
       <DependentUpon>StringKeyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Nodes\ZSetKeyView.xaml.cs">
+    <Compile Include="Views\Nodes\ZSetKeyView.xaml.cs">
       <DependentUpon>ZSetKeyView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PageModuleView.xaml.cs">
+    <Compile Include="Views\PageModuleView.xaml.cs">
       <DependentUpon>PageModuleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RedisClientDetailView.xaml.cs">
+    <Compile Include="Views\RedisClientDetailView.xaml.cs">
       <DependentUpon>RedisClientDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ShellView.xaml.cs">
+    <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Resources\Geometries.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ConnectServerDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="View\KeyContainerView.xaml">
+    <Page Include="Views\Dialogs\InputBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\KeyValueDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\KeyContainerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Nodes\HashKeyView.xaml">
+    <Page Include="Views\Nodes\HashKeyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Nodes\ListKeyView.xaml">
+    <Page Include="Views\Nodes\ListKeyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Nodes\SetKeyView.xaml">
+    <Page Include="Views\Nodes\SetKeyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Nodes\StringKeyView.xaml">
+    <Page Include="Views\Nodes\StringKeyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Nodes\ZSetKeyView.xaml">
+    <Page Include="Views\Nodes\ZSetKeyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PageModuleView.xaml">
+    <Page Include="Views\PageModuleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\RedisClientDetailView.xaml">
+    <Page Include="Views\RedisClientDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ShellView.xaml">
+    <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,6 +187,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedisManager.Core\RedisManager.Core.csproj">
+      <Project>{87fca0fa-47f0-48b0-8b8a-486b708a7172}</Project>
+      <Name>RedisManager.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedisManager.Util\RedisManager.Util.csproj">
+      <Project>{5abfe313-3cbb-4293-b306-5f172a0a9d3a}</Project>
+      <Name>RedisManager.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedisManager.ViewModel\RedisManager.ViewModel.csproj">
+      <Project>{B670FE8C-927F-48FA-AB66-DD060718064D}</Project>
+      <Name>RedisManager.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\imgs\key.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\imgs\redis.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

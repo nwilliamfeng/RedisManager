@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedisManager.ViewModel
+namespace RedisManager.ViewModels
 {
     [Export(typeof(RedisClientDetailViewModel))]
     public class RedisClientDetailViewModel : PageViewModel, IHandle<RedisClientDetailEventArgs>

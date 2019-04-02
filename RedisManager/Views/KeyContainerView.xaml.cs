@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedisManager.View
+namespace RedisManager.Views
 {
     /// <summary>
-    /// PageModuleView.xaml 的交互逻辑
+    /// KeyContainerView.xaml 的交互逻辑
     /// </summary>
-    public partial class PageModuleView : UserControl
+    public partial class KeyContainerView : UserControl
     {
-        public PageModuleView()
+        public KeyContainerView()
         {
             InitializeComponent();
         }
