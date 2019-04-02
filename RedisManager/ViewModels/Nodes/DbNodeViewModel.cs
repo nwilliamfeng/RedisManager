@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using StackExchange.Redis;
 
 namespace RedisManager.ViewModels
 {
     public class DbNodeViewModel : NodeViewModel
     {
-       // private SAEA.RedisSocket.RedisClient _client;
+        private IDatabase Database { get; set; }
         private int _dbIdx;
         private int _dbSize;
         private int _offSet = 0;
         private const int PAGE_SIZE = 20;
 
-        public DbNodeViewModel(int dbIdx, int dbSize)
+        public DbNodeViewModel(int dbIdx, int dbSize,IDatabase database)
         {
-          //  this._client = client;
-
+            this.Database = database;
             this._dbIdx = dbIdx;
             this.Keys = new ObservableCollection<KeyViewModel>();
             this._dbSize = dbSize;
@@ -89,10 +89,7 @@ namespace RedisManager.ViewModels
             }
         }
 
-        //public SAEA.RedisSocket.RedisClient RedisClient
-        //{
-        //    get { return this._client; }
-        //}
+      
 
         public string Name
         {
@@ -148,27 +145,26 @@ namespace RedisManager.ViewModels
                     var dr = this.WindowManager.ShowDialog(vm);
                     if (dr == false)
                         return;
-                    //var db = this.RedisClient.GetDataBase(this._dbIdx);
-
-                    //switch (vm.KeyType)
-                    //{
-                    //    case KeyType.String:
-                    //        db.Set(vm.Key, vm.Value);
-                    //        break;
-                    //    case KeyType.Hash:
-                    //        db.HSet(vm.Key, vm.SubKey, vm.Value);
-                    //        break;
-                    //    case KeyType.Set:
-                    //        db.SAdd(vm.Key, vm.Value);
-                    //        break;
-                    //    case KeyType.ZSet:
-                    //        db.ZAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
-                    //        break;
-                    //    case KeyType.List:
-                    //        db.LPush(vm.Key, vm.Value);
-                    //        break;
-                    //}
-                    //this.DoRefresh();
+                    
+                    switch (vm.KeyType)
+                    {
+                        case KeyType.String:
+                            this.Database.StringSet(vm.Key, vm.Value);
+                            break;
+                        case KeyType.Hash:
+                            db.HSet(vm.Key, vm.SubKey, vm.Value);
+                            break;
+                        case KeyType.Set:
+                            db.SAdd(vm.Key, vm.Value);
+                            break;
+                        case KeyType.ZSet:
+                            db.ZAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
+                            break;
+                        case KeyType.List:
+                            db.LPush(vm.Key, vm.Value);
+                            break;
+                    }
+                    this.DoRefresh();
 
 
                 }));

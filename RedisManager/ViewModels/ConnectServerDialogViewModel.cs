@@ -16,7 +16,7 @@ namespace RedisManager.ViewModels
             this.DisplayName = string.IsNullOrEmpty(connectionName) ? "新建连接" : string.Format("编辑连接[{0}]", connectionName);
         }
 
-        private string _connectionName = "newConn";
+        private string _connectionName = "新建本地连接";
 
         public string ConnectionName
         {
@@ -28,7 +28,7 @@ namespace RedisManager.ViewModels
             }
         }
 
-        private string _address = "172.31.32.85";
+        private string _address = "127.0.0.1";
 
         public string Address
         {
@@ -40,7 +40,7 @@ namespace RedisManager.ViewModels
             }
         }
 
-        private string _password = "yswenli";
+        private string _password = "";
 
         public string Password
         {

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using RedisManager.Util;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,25 +12,28 @@ using System.Windows.Input;
 
 namespace RedisManager.ViewModels
 {
-    public class RedisClientViewModel : NodeViewModel
+    public class RedisConnectionViewModel : NodeViewModel
     {
         public class RedisClientConfigInfo
         {
             public string ConnectionName { get; set; }
             public string ConnectionString { get; set; }
         }
-        private const int MaxDBConnectCount = 50;
+        private const int MaxDBConnectCount = 16;
+
+        
+        private ConnectionMultiplexer Connection { get; set; }
         private IEventAggregator _eventAggregator;
-        public RedisClientViewModel(string connectionName, string connectionString, IEventAggregator eventAggregator)
-        {
-            //this._client = new SAEA.RedisSocket.RedisClient(connectionString);
-            //this.Items = new ObservableCollection<RedisClient.DbNodeViewModel>();
-            //this._eventAggregator = eventAggregator;
+        public RedisConnectionViewModel(string connectionName, string connectionString, IEventAggregator eventAggregator)
+        {     
+            this.Connection = ConnectionMultiplexer.Connect(connectionString);          
+            this.Items = new ObservableCollection<DbNodeViewModel>();
+            this._eventAggregator = eventAggregator;
             this.Config = new RedisClientConfigInfo { ConnectionString = connectionString, ConnectionName = connectionName };
             this.Name = Config.ConnectionName;
         }
 
-        public RedisClientViewModel(RedisClientConfigInfo config, IEventAggregator eventAggregator) :
+        public RedisConnectionViewModel(RedisClientConfigInfo config, IEventAggregator eventAggregator) :
             this(config.ConnectionName, config.ConnectionString, eventAggregator)
         {
         }
@@ -54,16 +58,13 @@ namespace RedisManager.ViewModels
             {
                 int idx = 0;
                 List<Tuple<int, int>> lst = new List<Tuple<int, int>>();
-                //while (idx < MaxDBConnectCount)
-                //{
-                //    var success = this._client.Select(idx);
-                //    if (success)
-                //        lst.Add(new Tuple<int, int>(idx, this._client.DBSize()));
-                //    if (this._client.IsCluster)
-                //        break;
-                //    else
-                //        idx++;
-                //}
+                while (idx < MaxDBConnectCount)
+                {
+                    this.Connection.GetDatabase(idx) ;
+                       lst.Add(new Tuple<int, int>(idx, this._client.DBSize()));
+                 
+                        idx++;
+                }
 
                 return lst;
             });
@@ -76,12 +77,7 @@ namespace RedisManager.ViewModels
 
         public ObservableCollection<DbNodeViewModel> Items { get; private set; }
 
-       // private SAEA.RedisSocket.RedisClient _client;
-
-        //public SAEA.RedisSocket.RedisClient Raw
-        //{
-        //    get { return this._client; }
-        //}
+      
 
         private ICommand _openCommand;
 
@@ -124,8 +120,8 @@ namespace RedisManager.ViewModels
                     var lst = await this.GetDbs();
                     lst.ForEach(x =>
                     {
-                       // var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this._client);
-                     //   this.Items.Add(dbNode);
+                        var dbNode = new DbNodeViewModel(x.Item1, x.Item2, this.is);
+                        this.Items.Add(dbNode);
                     });
 
                 }));

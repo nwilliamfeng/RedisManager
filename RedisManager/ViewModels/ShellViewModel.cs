@@ -12,6 +12,7 @@ using Newtonsoft.Json.Serialization;
 using System.IO;
 using Newtonsoft.Json;
 using RedisManager.Util;
+ 
 
 namespace RedisManager.ViewModels
 {
@@ -26,8 +27,8 @@ namespace RedisManager.ViewModels
         public ShellViewModel(PageModuleViewModel pageModule, IEventAggregator eventAggregator, IWindowManager windowManager)
         {
             this.DisplayName =  "Redis客户端工具 " ;
-            this.RedisClients = new ObservableCollection<RedisClientViewModel>();
-           
+            this.RedisConnections = new ObservableCollection<RedisConnectionViewModel>();
+            
             this.PageModule = pageModule;
             this._eventAggregator = eventAggregator;
             this._windowManager = windowManager;
@@ -37,7 +38,7 @@ namespace RedisManager.ViewModels
 
         public PageModuleViewModel PageModule { get; private set; }
 
-        public ObservableCollection<RedisClientViewModel> RedisClients { get; private set; }
+        public ObservableCollection<RedisConnectionViewModel> RedisConnections { get; private set; }
 
         private ICommand _connectCommand;
 
@@ -51,11 +52,9 @@ namespace RedisManager.ViewModels
                     var dr = this._windowManager.ShowDialog(dvm);
                     if (dr == false)
                         return;
-                    var cnnStr = string.Format("server={0}:{1};password={2}", dvm.Address, dvm.Port, dvm.Password);
-                    //    var cnnStr = "server=172.31.32.85:6379;password=yswenli";               
-
-                    this.RedisClients.Add(new RedisClientViewModel(dvm.ConnectionName, cnnStr, this._eventAggregator));
-                    var cnns = this.RedisClients.Select(x => x.Config).ToArray();
+                    var cnnStr = $"{dvm.Address}:{dvm.Port},password={dvm.Password}" ;                 
+                    this.RedisConnections.Add(new RedisConnectionViewModel(dvm.ConnectionName, cnnStr, this._eventAggregator));
+                    var cnns = this.RedisConnections.Select(x => x.Config).ToArray();
                     File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(cnns));
                 }));
             }
@@ -65,4 +64,5 @@ namespace RedisManager.ViewModels
 
     }
 }
+ 
  

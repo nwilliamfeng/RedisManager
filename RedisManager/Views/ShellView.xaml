@@ -114,7 +114,7 @@
                 <ColumnDefinition Width="*"/>
 
             </Grid.ColumnDefinitions>
-            <TreeView x:Name="tvAllPhrases"  ItemsSource="{Binding RedisClients}" ItemTemplate="{StaticResource HDT_Client}" BorderThickness="0,1,1,1"
+            <TreeView x:Name="tvAllPhrases"  ItemsSource="{Binding RedisConnections}" ItemTemplate="{StaticResource HDT_Client}" BorderThickness="0,1,1,1"
                  Focusable="False"  ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem">

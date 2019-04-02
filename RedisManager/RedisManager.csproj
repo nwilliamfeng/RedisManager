@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\RedisExtensions.cs" />
     <Compile Include="KeyType.cs" />
     <Compile Include="Util\DelegateValueConverter.cs" />
     <Compile Include="Util\RelayCommand.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="ViewModels\Keys\ZSetKeyViewModel.cs" />
     <Compile Include="ViewModels\Nodes\DbNodeViewModel.cs" />
     <Compile Include="ViewModels\Nodes\NodeViewModel.cs" />
-    <Compile Include="ViewModels\Nodes\RedisClientViewModel.cs" />
+    <Compile Include="ViewModels\Nodes\RedisConnectionViewModel.cs" />
     <Compile Include="ViewModels\Pages\KeyContainerViewModel.cs" />
     <Compile Include="ViewModels\Pages\PageModuleViewModel.cs" />
     <Compile Include="ViewModels\Pages\PageViewModel.cs" />
