@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:RedisManager" >
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary>
-                <DrawingImage x:Key="icon">
+            
+                <!--<DrawingImage x:Key="icon">
                     <DrawingImage.Drawing>
                         <DrawingGroup>
                             <DrawingGroup.Children>
@@ -13,8 +13,8 @@
                             </DrawingGroup.Children>
                         </DrawingGroup>
                     </DrawingImage.Drawing>
-                </DrawingImage>
-            </ResourceDictionary>
+                </DrawingImage>-->
+         
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/RedisManager;component/resources/Geometries.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RedisManager;component/resources/styles/ButtonStyle.xaml"/>
@@ -22,7 +22,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cyan.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary>
                     <local:MefBootstrapper x:Key="bootstrapper"/>

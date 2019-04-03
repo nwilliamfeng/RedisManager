@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -31,6 +32,10 @@ namespace RedisManager.ViewModels
             {
                 this._content = value;
                 this.NotifyOfPropertyChange(() => this.Content);
+                if (value != null)
+                {
+                    this.Title = this.Content.KeyType.ToString();
+                }
             }
         }
 

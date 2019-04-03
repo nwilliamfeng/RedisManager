@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:RedisManager"
              xmlns:view="clr-namespace:RedisManager.Views"
              xmlns:vm="clr-namespace:RedisManager.ViewModels"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -19,10 +20,10 @@
 
     </UserControl.Resources>
 
-    <TabControl ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}">
+    <TabControl Style="{StaticResource MetroTabControl}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}">
 
         <TabControl.ItemContainerStyle>
-            <Style TargetType="TabItem">
+            <Style TargetType="TabItem" BasedOn="{StaticResource MetroTabItem}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -31,8 +32,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                <Button Style="{StaticResource FlatButtonStyle}" Grid.Column="1" Margin="5,0,0,0" ToolTip="关闭"
+                                <TextBlock Text="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14"/>
+                                <Button Style="{StaticResource ChromelessButtonStyle}" Grid.Column="1" Margin="5,0,0,0" ToolTip="关闭"
                                         Command="{Binding DataContext.CloseCommand,RelativeSource={RelativeSource AncestorType=TabItem}}">
                                     <Path Height="12" Width="12" Data="{StaticResource  CloseIcon}" Fill="Gray" Stretch="Fill"/>
                                 </Button>

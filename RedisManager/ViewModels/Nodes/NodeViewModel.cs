@@ -20,5 +20,7 @@ namespace RedisManager.ViewModels
                 this.NotifyOfPropertyChange(() => this.IsExpanded);
             }
         }
+
+     
     }
 }
