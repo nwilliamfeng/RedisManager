@@ -12,15 +12,16 @@
 
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.6*"/>
-            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <DataGrid LoadingRow="DataGrid_LoadingRow"  SelectedItem="{Binding SelectedKeyValueItem}" SelectionMode="Single"
+            <DataGrid LoadingRow="DataGrid_LoadingRow"  SelectedItem="{Binding SelectedKeyValueItem}" SelectionMode="Single" MaxHeight="200" MinHeight="200"
                   ItemsSource="{Binding KeyValue}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" HeadersVisibility="All">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="行号"  CanUserSort="False" Visibility="Collapsed"  Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Header}" Width="36"/>
@@ -46,15 +47,16 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Key:"/>
             <TextBox Text="{Binding EditingKeyValueItem.Key,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="0,5"/>
             <TextBlock Text="Value:" Grid.Row="2"/>
             <TextBox Text="{Binding EditingKeyValueItem.Value,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Margin="0,5"/>
-            <Button Grid.Row="4" Margin="0,5" HorizontalAlignment="Right" Content="保存" Padding="10,2" Command="{Binding UpdateCommand}"/>
+            
         </Grid>
+        <Button Grid.Row="2"   HorizontalAlignment="Right" Content="保存" Padding="10,2" Command="{Binding UpdateCommand}" VerticalAlignment="Bottom"/>
     </Grid>
 
 

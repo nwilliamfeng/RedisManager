@@ -11,11 +11,11 @@ namespace RedisManager.ViewModels
     {
         private string _key;
 
-        //public HashKeyItemViewModel(string key, SAEA.RedisSocket.Model.ResponseData data)
-        //{
-        //    this._key = key;
-        //    this._value = data.Data;
-        //}
+        public HashKeyItemViewModel(string key, string value)
+        {
+            this._key = key;
+            this._value = value;
+        }
 
         public HashKeyItemViewModel()
         {

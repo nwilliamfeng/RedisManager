@@ -64,18 +64,17 @@ namespace RedisManager.ViewModels
 
         protected override object GetKeyValue()
         {
-            //if (_values == null)
-            //{
-            //    this._values = new ObservableCollection<RedisClient.ZSetKeyItemViewModel>();
+            if (_values == null)
+            {
+                this._values = new ObservableCollection<ZSetKeyItemViewModel>();
+                var lst = this.Database.SortedSetRangeByScoreWithScores(this.KeyName).ToList();
+                lst.ForEach(x =>
+                {
+                    this._values.Add(new ZSetKeyItemViewModel(x.Score, x.Element));
+                });
 
-            //    var lst = this.RedisClient.GetDataBase(this.DBIndex).ZRang(this.KeyName);
-            //    lst.ForEach(x =>
-            //    {
-            //        this._values.Add(new ZSetKeyItemViewModel(x.Score, x.Value));
-            //    });
 
-
-            //}
+            }
             return this._values;
         }
 
@@ -89,11 +88,8 @@ namespace RedisManager.ViewModels
                 {
                     if (this.SelectedKeyValueItem == null)
                         return;
-                    //var db = this.RedisClient.GetDataBase(this.DBIndex);
-
-                    //db.ZRemove(this.KeyName, new string[] { this.SelectedKeyValueItem.Value });
-                    //db.ZAdd(this.KeyName, this.EditingKeyValueItem.Value, this.EditingKeyValueItem.Score);
-
+                    this.Database.SortedSetRemove(this.KeyName, this.SelectedKeyValueItem.Value);
+                    this.Database.SortedSetAdd(this.KeyName, this.EditingKeyValueItem.Value, this.EditingKeyValueItem.Score);
                     this.SelectedKeyValueItem.Score = this.EditingKeyValueItem.Score;
                     this.SelectedKeyValueItem.Value = this.EditingKeyValueItem.Value;
                 }, () => this.EditingKeyValueItem != null));
@@ -108,14 +104,12 @@ namespace RedisManager.ViewModels
             {
                 return this._insertRowCommand ?? (this._insertRowCommand = new RelayCommand(() =>
                 {
-                    var vm = new KeyValueDialogViewModel { IsKeyTypeVisible = false };
+                    var vm = new KeyValueDialogViewModel { IsKeyTypeVisible = false,KeyType= RedisType.SortedSet,IsKeyVisible=false };
                     var dr = this.WindowManager.ShowDialog(vm);
                     if (dr == false)
                         return;
-                    //var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    //db.ZAdd(this.KeyName, vm.Value, double.Parse(vm.Key));
-                    //this.KeyValue.Add(new ZSetKeyItemViewModel { Score = double.Parse(vm.Key), Value = vm.Value });
-
+                    this.Database.SortedSetAdd(this.KeyName, vm.Value, double.Parse(vm.SubKey));
+                    this.KeyValue.Add(new ZSetKeyItemViewModel { Score = double.Parse(vm.SubKey), Value = vm.Value });
                 }));
             }
         }
@@ -131,10 +125,9 @@ namespace RedisManager.ViewModels
                     var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该行吗？", "删除", MessageBoxButton.OKCancel);
                     if (dr == MessageBoxResult.Cancel)
                         return;
-                    //var db = this.RedisClient.GetDataBase(this.DBIndex);
-                    //db.ZRemove(this.KeyName, new string[] { this.SelectedKeyValueItem.Value });
-                    //this.KeyValue.Remove(this.SelectedKeyValueItem);
-                    //this.SelectedKeyValueItem = null;
+                    this.Database.SortedSetRemove(this.KeyName, this.SelectedKeyValueItem.Value);
+                    this.KeyValue.Remove(this.SelectedKeyValueItem);
+                    this.SelectedKeyValueItem = null;
                 }, () => this.SelectedKeyValueItem != null));
             }
         }

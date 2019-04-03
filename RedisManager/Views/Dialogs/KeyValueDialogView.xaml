@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:RedisManager"
+        xmlns:redis="clr-namespace:StackExchange.Redis;assembly=StackExchange.Redis"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterOwner"
@@ -16,23 +17,32 @@
                 <x:Type  TypeName="local:KeyType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>-->
+        
     </Window.Resources>
     <DockPanel Margin="5">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,10">
-            <StackPanel.Resources>
+        <Grid  DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Padding" Value="10,2"/>
                 </Style>
-            </StackPanel.Resources>
-            <Button Content="确定" Click="Button_Click" IsDefault="True"/>
-            <Button Content="取消" IsCancel="True" Margin="10,0"/>
-        </StackPanel>
+            </Grid.Resources>
+            <TextBlock Text="{Binding Error,Mode=OneWay}" VerticalAlignment="Center" Foreground="Red"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="确定" Click="Button_Click" IsDefault="True"/>
+                <Button Content="取消" IsCancel="True" Margin="10,0"/>
+            </StackPanel>
+
+        </Grid>
         <Grid Margin="10,0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+              
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="键名：" HorizontalAlignment="Left" Margin="0,0,0,5"  
@@ -47,16 +57,47 @@
                 <TextBlock Text="类型：" Margin="0,10,0,0"/>
                 <ComboBox HorizontalAlignment="Stretch" SelectedItem="{Binding KeyType,Mode=TwoWay}" Padding="5,3"  ItemsSource="{Binding KeyTypes}" Grid.Row="1" Margin="0,5"/>
             </Grid>
-            <TextBlock Text="键值：" HorizontalAlignment="Left" Margin="0,10,0,5" Grid.Row="3"/>
-            <Grid Grid.Row="4">
+            <!--<TextBlock Text="键值：" HorizontalAlignment="Left" Margin="0,10,0,5" Grid.Row="3"/>-->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="13*"/>
+                    <ColumnDefinition Width="371*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Score" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.EnumToVisibilityConverter},ConverterParameter=SortedSet}" Margin="0,10,0,5"/>
-                <TextBox  Text="{Binding SubKey}"   Grid.Row="1" Margin="0,0,0,10" Padding="5,3" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.SetToVisibilityConverter}}"/>
-                <TextBox  Text="{Binding Value}" VerticalAlignment="Stretch"  VerticalContentAlignment="Top" Grid.Row="2"/>
+                <TextBlock  Margin="0,10,0,5" Grid.ColumnSpan="2">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding KeyType}" Value="String">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding KeyType}" Value="List">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding KeyType}" Value="Set">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding KeyType}" Value="SortedSet">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Text" Value="Score："/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding KeyType}" Value="Hash">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Text" Value="Hash键名："/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBox  Text="{Binding SubKey}"   Grid.Row="1" Margin="0,0,0,10" Padding="5,3" Visibility="{Binding KeyType,Converter={x:Static local:ValueConverters.SetToVisibilityConverter}}" Grid.ColumnSpan="2"/>
+                <TextBlock Text="键值："  Margin="0,10,0,5" Grid.ColumnSpan="2" Grid.Row="3"/>
+                <TextBox  Text="{Binding Value}" MinLines="5" VerticalAlignment="Stretch"  VerticalContentAlignment="Top" Grid.Row="4"  Grid.ColumnSpan="2"/>
             </Grid>
 
         </Grid>

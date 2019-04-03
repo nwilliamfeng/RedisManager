@@ -15,7 +15,7 @@ namespace RedisManager.ViewModels
         public StringKeyViewModel(string key, DbNodeViewModel parent)
             : base(key, parent)
         {
-           // this._value = this.RedisClient.GetDataBase(this.DBIndex).Get(this.KeyName);
+           this._value = this.Database.StringGet(this.KeyName);
         }
 
         public override RedisType KeyType
@@ -49,12 +49,12 @@ namespace RedisManager.ViewModels
             {
                 return this._updateCommand ?? (this._updateCommand = new RelayCommand(() =>
                 {
-                  //  var db = this.RedisClient.GetDataBase(this.DBIndex);
-                  //  db.Del(this.KeyName);
-                 //   db.Set(this.KeyName, this.KeyValue);
-
+                    this.Database.StringSet(this.KeyName,this.KeyValue);
+                 
                 }));
             }
         }
+
+    
     }
 }

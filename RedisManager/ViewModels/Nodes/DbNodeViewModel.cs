@@ -13,7 +13,8 @@ namespace RedisManager.ViewModels
 {
     public class DbNodeViewModel : NodeViewModel
     {
-        private ConnectionMultiplexer Connection { get; set; }
+        public ConnectionMultiplexer Connection { get; private set; }
+
         private int _dbIdx;
       
         private int _offSet = 0;
@@ -65,8 +66,14 @@ namespace RedisManager.ViewModels
                 return result;
             });
 
-            lst.ForEach(x => this.Keys.Add(x));
+            lst.ForEach(x => this.AddKey(x));
             this.NotifyOfPropertyChange(() => this.Name);
+        }
+
+        private void AddKey(KeyViewModel key)
+        {
+            if (!this.Keys.Contains(key))
+                this.Keys.Add(key);
         }
 
 
@@ -90,24 +97,24 @@ namespace RedisManager.ViewModels
             }
         }
 
-        private ICommand _loadKeysCommand;
+        //private ICommand _loadKeysCommand;
 
-        public ICommand LoadKeysCommand
-        {
-            get
-            {
-                return this._loadKeysCommand ?? (this._loadKeysCommand = new RelayCommand(() =>
-                {
-                    this.DoRefresh();
-                }));
-            }
-        }
+        //public ICommand LoadKeysCommand
+        //{
+        //    get
+        //    {
+        //        return this._loadKeysCommand ?? (this._loadKeysCommand = new RelayCommand(() =>
+        //        {
+        //            this.DoRefresh();
+        //        }));
+        //    }
+        //}
 
-        private void DoRefresh()
-        {
-            this.LoadKeysAsync(true);
-            this.IsExpanded = true;
-        }
+        //private void DoRefresh()
+        //{
+        //    this.LoadKeysAsync(true);
+        //    this.IsExpanded = true;
+        //}
 
         private ICommand _loadNextPageCommand;
 
@@ -137,26 +144,29 @@ namespace RedisManager.ViewModels
                     if (dr == false)
                         return;
                     var db = this.Connection.GetDatabase(this._dbIdx);
+                    var succ = false;
                     switch (vm.KeyType)
                     {
                         case RedisType.String:
-                            db.StringSet(vm.Key, vm.Value);
+                            succ=db.StringSet(vm.Key, vm.Value);
                             break;
                         case RedisType.Hash:
-                            db.HashSet(vm.Key, vm.SubKey, vm.Value);
+                            succ = db.HashSet(vm.Key, vm.SubKey, vm.Value);
                             break;
                         case RedisType.Set:
-                            db.SetAdd(vm.Key, vm.Value);
+                            succ = db.SetAdd(vm.Key, vm.Value);
                             break;
                         case RedisType.SortedSet:
-                            db.SortedSetAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
+                            succ = db.SortedSetAdd(vm.Key, vm.Value, double.Parse(vm.SubKey));
                             break;
                         case RedisType.List:
-                            db.ListLeftPush(vm.Key, vm.Value);
+                            succ = db.ListRightPush(vm.Key, vm.Value)>0;
                             break;
                     }
-                    this.DoRefresh();
-
+                    if (!succ)
+                        return;
+                    this.AddKey(KeyViewModel.Create(vm.KeyType, vm.Key, this));
+                    this.IsExpanded = true;
 
                 }));
             }

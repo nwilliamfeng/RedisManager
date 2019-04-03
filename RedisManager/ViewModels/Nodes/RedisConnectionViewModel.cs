@@ -52,9 +52,6 @@ namespace RedisManager.ViewModels
         public RedisClientConfigInfo Config { get; private set; }
 
 
-       
-
-
         public string Name { get; private set; }
 
 

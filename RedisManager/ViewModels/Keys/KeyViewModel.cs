@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+ 
 namespace RedisManager.ViewModels
 {
     public abstract class KeyViewModel : NodeViewModel
@@ -23,14 +23,22 @@ namespace RedisManager.ViewModels
 
         public DbNodeViewModel Parent { get; private set; }
 
-
-        //protected SAEA.RedisSocket.RedisClient RedisClient
-        //{
-        //    get { return this.Parent.RedisClient; }
-        //}
+       
 
         public abstract RedisType KeyType { get; }
 
+        protected ConnectionMultiplexer Connection
+        {
+            get { return this.Parent.Connection; }
+        }
+
+        protected IDatabase Database
+        {
+            get
+            {
+                return this.Connection.GetDatabase(this.DBIndex);
+            }
+        }
 
 
         private string _keyName;
@@ -66,6 +74,8 @@ namespace RedisManager.ViewModels
                 return this._windowManager;
             }
         }
+
+       
 
 
         protected int DBIndex
@@ -126,6 +136,12 @@ namespace RedisManager.ViewModels
                     return new HashKeyViewModel(keyName, parent);
                 case RedisType.String:
                     return new StringKeyViewModel(keyName, parent);
+                case RedisType.Set:
+                    return new SetKeyViewModel(keyName, parent);
+                case RedisType.SortedSet:
+                    return new ZSetKeyViewModel(keyName, parent);
+                case RedisType.List:
+                    return new ListKeyViewModel(keyName, parent);
 
             }
             return null;

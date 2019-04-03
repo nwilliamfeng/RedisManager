@@ -65,10 +65,7 @@ namespace RedisManager.ViewModels
         protected override object GetKeyValue()
         {
             if (_values == null)
-            {
-               // var values = this.RedisClient.GetDataBase(this.DBIndex).LRang(this.KeyName);
-              //  this._values = new ObservableCollection<string>(values);
-            }
+                this._values = new ObservableCollection<string>(this.Database.ListRange(this.KeyName).Select(x=>x.ToString()) );
             return this._values;
         }
 
@@ -82,11 +79,8 @@ namespace RedisManager.ViewModels
             {
                 return this._updateCommand ?? (this._updateCommand = new RelayCommand(() =>
                 {
-                  //  var db = this.RedisClient.GetDataBase(this.DBIndex);
-                 //   var idx = this.KeyValue.IndexOf(this.SelectedKeyValueItem);
-
-                    //    db.LRemove(this.KeyName, idx,idx  );
-                //    db.LSet(this.KeyName, idx, this.EditingKeyValueItem);
+                    var idx = this.KeyValue.IndexOf(this.SelectedKeyValueItem);
+                    this.Database.ListSetByIndex(this.KeyName, idx, this.EditingKeyValueItem);
                     this.SelectedKeyValueItem = this.EditingKeyValueItem;
                     this.Reload();
                 }, () => this.EditingKeyValueItem != null));
@@ -106,8 +100,7 @@ namespace RedisManager.ViewModels
                     if (dr == false)
                         return;
 
-                   // var db = this.RedisClient.GetDataBase(this.DBIndex);
-                  //  db.LPush(this.KeyName, vm.Value);
+                    this.Database.ListLeftPush(this.KeyName, vm.Value);
                     this.Reload();
 
                 }));
@@ -116,8 +109,9 @@ namespace RedisManager.ViewModels
 
         private void Reload()
         {
-            this.KeyValue.Clear();
-          //  this.RedisClient.GetDataBase(this.DBIndex).LRang(this.KeyName).ForEach(x => this.KeyValue.Add(x));
+            this.KeyValue.Clear();           
+            var redisValues =this.Database.ListRange(this.KeyName).ToList();
+            redisValues.ForEach(x => this.KeyValue.Add(x));        
         }
 
         private ICommand _deleteRowCommand;
@@ -131,6 +125,7 @@ namespace RedisManager.ViewModels
                     var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该行吗？", "删除", MessageBoxButton.OKCancel);
                     if (dr == MessageBoxResult.Cancel)
                         return;
+                    this.Database.ListRemove(this.KeyName, SelectedKeyValueItem);
                    // var db = this.RedisClient.GetDataBase(this.DBIndex);
 
                  //   db.LRemove(this.KeyName, 1, SelectedKeyValueItem);

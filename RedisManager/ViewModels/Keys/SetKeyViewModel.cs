@@ -66,8 +66,8 @@ namespace RedisManager.ViewModels
         {
             if (_values == null)
             {
-             //   var values = this.RedisClient.GetDataBase(this.DBIndex).SMemebers(this.KeyName);
-              //  this._values = new ObservableCollection<string>(values);
+                var values = this.Database.SetMembers(this.KeyName);
+                this._values = new ObservableCollection<string>(values.Select(x=>x.ToString()));
             }
             return this._values;
         }
@@ -82,14 +82,12 @@ namespace RedisManager.ViewModels
             {
                 return this._updateCommand ?? (this._updateCommand = new RelayCommand(() =>
                 {
-                 //   var db = this.RedisClient.GetDataBase(this.DBIndex);
-
-                 //   db.SRemove(this.KeyName, new string[] { this.SelectedKeyValueItem });
-                //    db.SAdd(this.KeyName, this.EditingKeyValueItem);
-                    this.SelectedKeyValueItem = this.EditingKeyValueItem;
+                   
+                    this.Database.SetRemove(this.KeyName, this.SelectedKeyValueItem);
+                    this.Database.SetAdd(this.KeyName, this.EditingKeyValueItem);
                     this.KeyValue.Clear();
-                 //   this.RedisClient.GetDataBase(this.DBIndex).SMemebers(this.KeyName).ForEach(x => this.KeyValue.Add(x));
-
+                    this.Database.SetMembers(this.KeyName).ToList().ForEach(x=>this.KeyValue.Add(x));
+                    this.SelectedKeyValueItem = this.EditingKeyValueItem;
                 }, () => this.EditingKeyValueItem != null));
             }
         }
@@ -106,10 +104,8 @@ namespace RedisManager.ViewModels
                     var dr = this.WindowManager.ShowDialog(vm);
                     if (dr == false)
                         return;
-                   // var db = this.RedisClient.GetDataBase(this.DBIndex);
-                 //   db.SAdd(this.KeyName, vm.Value);
+                    this.Database.SetAdd(this.KeyName, vm.Value);
                     this.KeyValue.Add(vm.Value);
-
                 }));
             }
         }
@@ -125,8 +121,7 @@ namespace RedisManager.ViewModels
                     var dr = MessageBox.Show(Application.Current.MainWindow, "确定要删除该行吗？", "删除", MessageBoxButton.OKCancel);
                     if (dr == MessageBoxResult.Cancel)
                         return;
-                  //  var db = this.RedisClient.GetDataBase(this.DBIndex);
-                 //   db.SRemove(this.KeyName, new string[] { this.SelectedKeyValueItem });
+                    this.Database.SetRemove(this.KeyName,this.SelectedKeyValueItem);
                     this.KeyValue.Remove(this.SelectedKeyValueItem);
                     this.SelectedKeyValueItem = null;
                 }, () => this.SelectedKeyValueItem != null));

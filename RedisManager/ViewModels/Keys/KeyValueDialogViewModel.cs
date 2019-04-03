@@ -77,6 +77,18 @@ namespace RedisManager.ViewModels
             }
         }
 
+        private string _error;
+
+        public string Error
+        {
+            get { return this._error; }
+            set
+            {
+                this._error = value;
+                this.NotifyOfPropertyChange(() => this.Error);
+            }
+        }
+
         public IEnumerable<RedisType> KeyTypes
         {
             get
