@@ -105,7 +105,7 @@
         </HierarchicalDataTemplate>
 
     </UserControl.Resources>
-    <TreeView   ItemsSource="{Binding RedisConnections}" ItemTemplate="{StaticResource HDT_Client}" BorderThickness="0,0,1,0"
+    <TreeView   ItemsSource="{Binding RedisConnections}" ItemTemplate="{StaticResource HDT_Client}" BorderThickness="0" Padding="2,0"
                  Focusable="False"  ScrollViewer.HorizontalScrollBarVisibility="Auto">
         <TreeView.ItemContainerStyle>
             <Style TargetType="TreeViewItem" BasedOn="{StaticResource MetroTreeViewItem}">

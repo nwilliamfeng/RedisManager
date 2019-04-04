@@ -76,10 +76,10 @@ namespace RedisManager.ViewModels
                 return this._connectCommand ?? (this._connectCommand = new RelayCommand(async () =>
                 {
                     _enableTest = false;
-                    var cnnStr = string.Format("server={0}:{1};password={2}", this.Address, this.Port, this.Password);
+                    var cnnStr = string.Format("{0}:{1},password={2}", this.Address, this.Port, this.Password);
                     try
                     {
-                        await this.ExecuteConnect(cnnStr);
+                        await ConnectionMultiplexer.ConnectAsync(cnnStr);
                         System.Windows.MessageBox.Show("测试成功！");
                     }
                     catch (Exception ex)
@@ -97,13 +97,7 @@ namespace RedisManager.ViewModels
                 }, () => this._enableTest));
             }
         }
-
-        private async Task ExecuteConnect(string cnnStr)
-        {
-        
-                await ConnectionMultiplexer.ConnectAsync(cnnStr);
-            
-        }
+ 
 
     }
 }

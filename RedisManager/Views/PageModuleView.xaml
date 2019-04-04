@@ -20,7 +20,7 @@
 
     </UserControl.Resources>
 
-    <TabControl Style="{StaticResource MetroTabControl}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}">
+    <TabControl BorderThickness="0" Style="{StaticResource MetroTabControl}" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem,Mode=TwoWay}">
 
         <TabControl.ItemContainerStyle>
             <Style TargetType="TabItem" BasedOn="{StaticResource MetroTabItem}">
