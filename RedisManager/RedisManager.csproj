@@ -80,7 +80,7 @@
     <Compile Include="Util\RelayCommand.Generic.cs" />
     <Compile Include="ViewModels\ConnectServerDialogViewModel.cs" />
     <Compile Include="ViewModels\Events\KeyNodeEventArgs.cs" />
-    <Compile Include="ViewModels\Events\RedisClientDetailEventArgs.cs" />
+    <Compile Include="ViewModels\Events\RedisConnectionEventArgs.cs" />
     <Compile Include="ViewModels\InputBoxViewModel.cs" />
     <Compile Include="ViewModels\Keys\HashKeyItemViewModel.cs" />
     <Compile Include="ViewModels\Keys\HashKeyViewModel.cs" />

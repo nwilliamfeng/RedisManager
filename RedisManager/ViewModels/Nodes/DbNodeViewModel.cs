@@ -14,9 +14,7 @@ namespace RedisManager.ViewModels
     public class DbNodeViewModel : NodeViewModel
     {
         public ConnectionMultiplexer Connection { get; private set; }
-
-        private int _dbIdx;
-      
+        private readonly int _dbIdx;     
         private int _offSet = 0;
         private const int PAGE_SIZE = 20;
 
@@ -24,10 +22,8 @@ namespace RedisManager.ViewModels
         {
             this.Connection = connection;
             this._dbIdx = dbIdx;
-
             this.Keys = new ObservableCollection<KeyViewModel>();
             this.LoadKeysAsync(true);
-
         }
 
         private IWindowManager _windowManager;
@@ -42,12 +38,32 @@ namespace RedisManager.ViewModels
             }
         }
 
+        private string _filter;
+
+        public string Filter
+        {
+            get { return this._filter; }
+            set {
+                this._filter = value;
+                this.NotifyOfPropertyChange(() => this.Filter);
+                this.NotifyOfPropertyChange(() => this.IsFilterAvailable);
+            }
+        }
+
+        public bool IsFilterAvailable
+        {
+            get { return !string.IsNullOrEmpty(this.Filter); }
+        }
+
 
         private async void LoadKeysAsync(bool needClear)
         {
             if (needClear)
+            {
+                this._offSet = 0;
                 this.Keys.Clear();
-            var keys=this.Connection.SelfServer().Keys(this._dbIdx, pageSize: 50, pageOffset: this._offSet);
+            }
+            var keys=this.Connection.SelfServer().Keys(this._dbIdx,pattern:this.Filter, pageSize: 50, pageOffset: this._offSet);
             this._offSet+=keys.Count();
            
             if (keys.Count()==0)
@@ -85,9 +101,6 @@ namespace RedisManager.ViewModels
             get { return this._dbIdx; }
         }
 
-       
-
-      
 
         public string Name
         {
@@ -97,24 +110,25 @@ namespace RedisManager.ViewModels
             }
         }
 
-        //private ICommand _loadKeysCommand;
+        private ICommand _setFilterCommand;
 
-        //public ICommand LoadKeysCommand
-        //{
-        //    get
-        //    {
-        //        return this._loadKeysCommand ?? (this._loadKeysCommand = new RelayCommand(() =>
-        //        {
-        //            this.DoRefresh();
-        //        }));
-        //    }
-        //}
+        public ICommand SetFilterCommand
+        {
+            get
+            {
+                return this._setFilterCommand ?? (this._setFilterCommand = new RelayCommand(() =>
+                {
+                    var input = new InputBoxViewModel { Title = "模糊查询表达式" ,Content=this.Filter};
+                    var dr=this.WindowManager.ShowDialog(input);
+                    if (dr == false)
+                        return;
+                    this.Filter = input.Content;
+                    this.LoadKeysAsync(true);
+                }));
+            }
+        }
 
-        //private void DoRefresh()
-        //{
-        //    this.LoadKeysAsync(true);
-        //    this.IsExpanded = true;
-        //}
+        
 
         private ICommand _loadNextPageCommand;
 

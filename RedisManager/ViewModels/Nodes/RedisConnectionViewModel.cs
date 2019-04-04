@@ -24,9 +24,10 @@ namespace RedisManager.ViewModels
         
         private ConnectionMultiplexer Connection { get; set; }
         private IEventAggregator _eventAggregator;
+
         public RedisConnectionViewModel(string connectionName, string connectionString, IEventAggregator eventAggregator)
         {     
-            this.Connection = ConnectionMultiplexer.Connect(connectionString);          
+            
             this.Items = new ObservableCollection<DbNodeViewModel>();
             this._eventAggregator = eventAggregator;
             this.Config = new RedisClientConfigInfo { ConnectionString = connectionString, ConnectionName = connectionName };
@@ -38,15 +39,10 @@ namespace RedisManager.ViewModels
         {
         }
 
-        private bool _isConnected;
+       
         public bool IsConnected
         {
-            get { return this._isConnected; }
-            private set
-            {
-                this._isConnected = value;
-                this.NotifyOfPropertyChange(() => this.IsConnected);
-            }
+            get { return this.Connection==null?false:this.Connection.IsConnected; }      
         }
 
         public RedisClientConfigInfo Config { get; private set; }
@@ -67,7 +63,7 @@ namespace RedisManager.ViewModels
             {
                 return this._openCommand ?? (this._openCommand = new RelayCommand(() =>
                 {
-                  //  this._eventAggregator.PublishOnUIThread(new RedisClientDetailEventArgs(this.Raw));
+                     this._eventAggregator.PublishOnUIThread(new RedisConnectionEventArgs(this.Connection));
                 }));
             }
         }
@@ -87,16 +83,18 @@ namespace RedisManager.ViewModels
                     }
                     try
                     {
-                        await ExecuteConnect();
+                        this.Connection = await ConnectionMultiplexer.ConnectAsync(this.Config.ConnectionString);
+                        this.IsExpanded = true;
+
+                        this.AddDbs();
+                        this.NotifyOfPropertyChange(() => this.IsConnected);
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(Application.Current.MainWindow, ex.Message, "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    this.IsExpanded = true;
-                    this.IsConnected = true;
-                    this.AddDbs();
+                   
 
                 }));
             }
@@ -110,10 +108,13 @@ namespace RedisManager.ViewModels
             {
                 return this._refreshCommand ?? (this._refreshCommand = new RelayCommand( () =>
                 {
-                    this.IsConnected = false;
+                    this.Connection.Close();
+                   
+                    this.NotifyOfPropertyChange(() => this.IsConnected);
                     this.IsExpanded = false;
-                    this.IsConnected = true;
+                    this.Connection = ConnectionMultiplexer.Connect(this.Config.ConnectionString);
                     this.AddDbs();
+                    this.NotifyOfPropertyChange(() => this.IsConnected);
                     this.IsExpanded = true;
 
                 }, () => this.IsConnected));
@@ -131,12 +132,6 @@ namespace RedisManager.ViewModels
 
 
 
-        private async Task ExecuteConnect()
-        {
-            await Task.Run(() =>
-            {
-              //  this._client.Connect();
-            });
-        }
+       
     }
 }

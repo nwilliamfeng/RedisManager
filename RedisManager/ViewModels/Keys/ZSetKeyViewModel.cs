@@ -18,7 +18,7 @@ namespace RedisManager.ViewModels
         public ZSetKeyViewModel(string key, DbNodeViewModel parent)
             : base(key, parent)
         {
-
+           
         }
 
         public override RedisType KeyType

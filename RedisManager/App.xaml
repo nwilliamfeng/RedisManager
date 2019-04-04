@@ -4,17 +4,7 @@
              xmlns:local="clr-namespace:RedisManager" >
     <Application.Resources>
         <ResourceDictionary>
-            
-                <!--<DrawingImage x:Key="icon">
-                    <DrawingImage.Drawing>
-                        <DrawingGroup>
-                            <DrawingGroup.Children>
-                                
-                            </DrawingGroup.Children>
-                        </DrawingGroup>
-                    </DrawingImage.Drawing>
-                </DrawingImage>-->
-         
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/RedisManager;component/resources/Geometries.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/RedisManager;component/resources/styles/ButtonStyle.xaml"/>

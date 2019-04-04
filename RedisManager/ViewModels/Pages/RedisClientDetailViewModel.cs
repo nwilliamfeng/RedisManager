@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RedisManager.ViewModels
 {
     [Export(typeof(RedisClientDetailViewModel))]
-    public class RedisClientDetailViewModel : PageViewModel, IHandle<RedisClientDetailEventArgs>
+    public class RedisClientDetailViewModel : PageViewModel, IHandle<RedisConnectionEventArgs>
     {
         [ImportingConstructor]
         public RedisClientDetailViewModel(IEventAggregator eventAggregator)
@@ -36,7 +36,7 @@ namespace RedisManager.ViewModels
         }
 
 
-        void IHandle<RedisClientDetailEventArgs>.Handle(RedisClientDetailEventArgs arg)
+        void IHandle<RedisConnectionEventArgs>.Handle(RedisConnectionEventArgs arg)
         {
             //if (!arg.Client.IsConnected)
             //{

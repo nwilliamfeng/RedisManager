@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using System.Windows.Input;
 using RedisManager.Util;
+using StackExchange.Redis;
 
 namespace RedisManager.ViewModels
 {
@@ -99,12 +100,9 @@ namespace RedisManager.ViewModels
 
         private async Task ExecuteConnect(string cnnStr)
         {
-            await Task.Run(() =>
-            {
-               // SAEA.RedisSocket.RedisClient redisClient = new SAEA.RedisSocket.RedisClient(cnnStr);
-              //  redisClient.Connect();
-
-            });
+        
+                await ConnectionMultiplexer.ConnectAsync(cnnStr);
+            
         }
 
     }

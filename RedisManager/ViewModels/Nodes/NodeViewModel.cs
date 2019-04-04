@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RedisManager.ViewModels
 {
-    public abstract class NodeViewModel : PropertyChangedBase
+    public abstract class NodeViewModel : PropertyChangedBase,INode
     {
         private bool _isExpanded;
 
@@ -22,5 +22,10 @@ namespace RedisManager.ViewModels
         }
 
      
+    }
+
+    public interface INode
+    {
+        bool IsExpanded { get; set; }
     }
 }
